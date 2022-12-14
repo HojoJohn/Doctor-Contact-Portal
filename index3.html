@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Doctor Chat Screen</title>
+  <style>
+    /* Add some styling to make the page look nice */
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+    }
+
+    #chat-container {
+      width: 500px;
+      margin: 0 auto;
+      padding: 20px;
+      border: 1px solid #ccc;
+    }
+
+    #chat-header {
+      text-align: center;
+      font-weight: bold;
+      margin-bottom: 20px;
+    }
+
+    #chat-messages {
+      height: 300px;
+      overflow-y: scroll;
+      margin-bottom: 20px;
+      padding: 10px;
+      border: 1px solid #ccc;
+    }
+
+    #chat-input {
+      width: 100%;
+      padding: 10px;
+      border: 1px solid #ccc;
+    }
+
+    #chat-submit {
+      width: 100%;
+      padding: 10px;
+      border: 1px solid #ccc;
+      background-color: #333;
+      color: #fff;
+      cursor: pointer;
+    }
+
+    #call-container {
+      margin-top: 20px;
+      text-align: center;
+    }
+
+    #call-status {
+      margin-bottom: 20px;
+    }
+
+    #call-button {
+      padding: 10px;
+      border: 1px solid #ccc;
+      background-color: #333;
+      color: #fff;
+      cursor: pointer;
+    }
+
+    #options-container {
+      margin-top: 20px;
+    }
+
+    #options-label {
+      font-weight: bold;
+      margin-bottom: 10px;
+    }
+
+    #options-select {
+      width: 100%;
+      padding: 10px;
+      border: 1px solid #ccc;
+    }
+
+    #file-input-container {
+      margin-top: 20px;
+    }
+
+    #file-input-label {
+      font-weight: bold;
+      margin-bottom: 10px;
+    }
+
+    #file-input {
+      width: 100%;
+      padding: 10px;
+      border: 1px solid #ccc;
+    }
+
+    #file-input-button {
+      width: 100%;
+      padding: 10px;
+      border: 1px solid #ccc;
+      background-color: #333;
+      color: #fff;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+  <div id="chat-container">
+    <div id="chat-header">Doctor Chat Screen</div>
+    <div id="chat-messages">
+      <!-- This will be populated with chat messages using JavaScript -->
+    </div>
+    <input type="text" id="chat-input" placeholder="Type your message here...">
+    <button id="chat-submit">Send</button>
+  </div>
+
+  <div id="call-container">
+    
+        <div id="call-status">Call status: <span id="call-status-text">Not in call</span></div>
+  <button id="call-button">Start Call</button>
+</div>
+
+<div id="options-container">
+  <div id="options-label">Options:</div>
+  <select id="options-select">
+    <option value="Option 1">Option 1</option>
+    <option value="Option 2">Option 2</option>
+    <option value="Option 3">Option 3</option>
+  </select>
+</div>
+
+<div id="file-input-container">
+  <div id="file-input-label">File Input:</div>
+  <input type="file" id="file-input">
+  <button id="file-input-button">Submit File</button>
+</div>
+
+<script>
+  // Get references to DOM elements
+  var chatMessages = document.getElementById('chat-messages');
+  var chatInput = document.getElementById('chat-input');
+  var chatSubmit = document.getElementById('chat-submit');
+  var callStatusText = document.getElementById('call-status-text');
+  var callButton = document.getElementById('call-button');
+  var optionsSelect = document.getElementById('options-select');
+  var fileInput = document.getElementById('file-input');
+  var fileInputButton = document.getElementById('file-input-button');
+
+  // An array to store our chat messages
+  var messages = [];
+
+  // Flag to keep track of whether we are in a call
+  var inCall = false;
+
+  // Function to add a new message to the chat
+  function addMessage(message) {
+    // Create a new div to hold the message
+    var messageElement = document.createElement('div');
+
+    // Set the message text
+    messageElement.innerText = message;
+
+    // Add the message to the array of messages
+    messages.push(message);
+
+    // Add the message element to the chat messages
+    chatMessages.appendChild(messageElement);
+  }
+
+  // Function to handle the user clicking the 'Send' button
+  function handleSubmit() {
+    // Get the message from the input field
+    var message = chatInput.value;
+
+    // Add the message to the chat
+    addMessage(message);
+
+    // Clear the input field
+    chatInput.value = '';
+  }
+
+  // Function to handle the user clicking the 'Start Call' button
+  function handleCall() {
+    // If we are not in a call, start the call
+    if (!inCall) {
+      // Update the call status
+      callStatusText.innerText = 'In call';
+
+      // Change the text on the call button
+      callButton.innerText = 'End Call';
+
+      // Set the inCall flag to true
+      inCall = true;
+    } else {
+      // If we are in a call, end the call
+      // Update the call status
+      callStatusText.innerText = 'Not in call';
+
+      // Change the text on the call button
+      callButton.innerText = 'Start Call';
+
+      // Set the inCall flag to false
+      inCall = false;
+        }
+}
+
+// Function to handle the user selecting a file
+function handleFileInput() {
+  // Get the selected file
+  var selectedFile = fileInput.files[0];
+
+  // Check if a file was selected
+  if (selectedFile) {
+    // Use the API to analyze the selected file
+    // The details of this will depend on the specific API being used
+
+    // Show a message to the user indicating that the file is being analyzed
+    addMessage('Analyzing file...');
+  }
+}
+
+// Set the 'Submit' button to call the handleSubmit function when clicked
+chatSubmit.addEventListener('click', handleSubmit);
+
+// Set the 'Start Call' button to call the handleCall function when clicked
+callButton.addEventListener('click', handleCall);
+
+// Set the 'Submit File' button to call the handleFileInput function when clicked
+fileInputButton.addEventListener('click', handleFileInput);
+
+
+// get references to the form, textarea, and chat conversation
+  const form = document.querySelector("form");
+  const messageInput = document.querySelector("#chat-message");
+  const chat = document.querySelector(".chat");
+
+  // add an event listener to the form to handle submissions
+  form.addEventListener("submit", event => {
+    // prevent the form from submitting
+    event.preventDefault();
+
+    // get the message from the textarea
+    const message = messageInput.value;
+
+    // append the message to the chat conversation
+    chat.innerHTML += `
+      <li class="right clearfix">
+        <span class="chat-img pull-right"></span>
+        <div class="chat-body clearfix">
+          <div class="header">
+            <small class="text-muted">
+              <span class="glyphicon glyphicon-time"></span>
+              ${new Date().toLocaleTimeString()}
+            </small>
+            <strong class="pull-right primary-font">Doctor</strong>
+          </div>
+          <p>${message}</p>
+        </div>
+      </li>
+    `;
+
+    // clear the textarea
+    messageInput.value = "";
+  });
+  function getMessages() {
+  // use AJAX to request new messages from the server
+  $.get("/messages", data => {
+    // loop through the new messages
+    data.forEach(message => {
+      // append the message to the chat conversation
+      chat.innerHTML += `
+        <li class="left clearfix">
+          <span class="chat-img pull-left"></span>
+          <div class="chat-body clearfix">
+            <div class="header">
+              <strong class="primary-font">John Doe</strong>
+              <small class="pull-right text-muted">
+                <span class="glyphicon glyphicon-time"></span>
+                ${new Date(message.timestamp).toLocaleTimeString()}
+              </small>
+            </div>
+            <p>${message.text}</p>
+          </div>
+        </li>
+      `;
+    });
+  });
+}"""
